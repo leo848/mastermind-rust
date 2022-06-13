@@ -46,4 +46,29 @@ mod tests {
 
         assert_eq!(guess_match, code_match::CodeMatch([MatchLevels::ExactMatch, MatchLevels::ColorMatch, MatchLevels::ColorMatch, MatchLevels::NoMatch]));
     }
+
+    #[test]
+    fn random_code() {
+        let random_code = code::Code::random();
+
+        assert_eq!(random_code.is_unique(), true);
+    }
+
+    #[test]
+    fn all_colors() {
+        let all_colors = Colors::all();
+        for _ in 0..80 {
+            let random_color: Colors = rand::random();
+            assert_eq!(true, all_colors.contains(&random_color));
+        }
+    }
+
+    #[test]
+    fn all_codes() {
+        let all_codes = code::Code::all();
+        for _ in 0..80 {
+            let random_code = code::Code::random();
+            assert_eq!(true, all_codes.contains(&random_code));
+        }
+    }
 }

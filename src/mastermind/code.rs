@@ -32,5 +32,46 @@ impl Code {
         matches.reverse();
         code_match::CodeMatch(matches)
     }
-}
 
+    /// Trivial method that checks for duplicate colors.
+    pub fn is_unique(&self) -> bool {
+        self[0] != self[1] && self[1] != self[2] && self[2] != self[3]
+    }
+
+    /// Return a random code.
+    pub fn random() -> Self {
+        let mut rng = rand::thread_rng();
+        let mut values: [Colors; 4] = [Colors::Empty; 4];
+
+        for i in 0..4 {
+            let mut new_value: Colors = rng.gen();
+            while values.contains(&new_value) {
+                new_value = rng.gen();
+            }
+            values[i] = new_value;
+        }
+
+        Code(values)
+    }
+
+    /// Returns all possible combinations of codes.
+    /// Useful for a brute-force algorithm.
+    pub fn all() -> Vec<Code> {
+        let mut all = Vec::new();
+
+        for c1 in Colors::all() {
+            for c2 in Colors::all() {
+                for c3 in Colors::all() {
+                    for c4 in Colors::all() {
+                        let code = Code([c1, c2, c3, c4]);
+                        if code.is_unique() {
+                            all.push(code);
+                        }
+                    }
+                }
+            }
+        }
+
+        all
+    }
+}
