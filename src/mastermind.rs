@@ -1,12 +1,14 @@
 pub mod code;
 pub mod code_match;
+pub mod solver;
 
+use itertools::Itertools;
 use rand::{
     distributions::{Distribution, Standard},
     Rng,
 };
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Colors {
     Empty,
     Blue,
@@ -31,7 +33,7 @@ impl Distribution<Colors> for Standard {
 }
 
 impl Colors {
-    pub fn all() -> [Colors;6] {
+    pub fn all() -> [Colors; 6] {
         use Colors::*;
         [Blue, Red, Green, Yellow, Violet, White]
     }
@@ -43,4 +45,3 @@ pub enum MatchLevels {
     ColorMatch,
     ExactMatch,
 }
-

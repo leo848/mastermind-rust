@@ -35,7 +35,7 @@ impl Code {
 
     /// Trivial method that checks for duplicate colors.
     pub fn is_unique(&self) -> bool {
-        self[0] != self[1] && self[1] != self[2] && self[2] != self[3]
+        self.iter().unique().collect::<Vec<_>>().len() == self.len()
     }
 
     /// Return a random code.
