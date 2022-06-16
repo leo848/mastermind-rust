@@ -2,6 +2,7 @@ use crate::mastermind::*;
 
 use std::ops::{Deref, DerefMut};
 
+/// A guess contains a Code and a corresponding CodeMatch.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Guess(pub (code::Code, code_match::CodeMatch));
 
@@ -21,13 +22,17 @@ impl DerefMut for Guess {
 pub struct Solver;
 
 impl Solver {
+    /// Get the possible codes from any number of guesses
     pub fn possible_codes(guesses: &[Guess]) -> Vec<code::Code> {
+        // Return all codes
         code::Code::all()
             .into_iter()
+            // where for every code
             .filter(|code| {
                 guesses
                     .iter()
-                    .all(|guess| (guess.0.0).match_code(code) == (guess.0.1))
+                    // every guess matches
+                    .all(|guess| (guess.0 .0).match_code(code) == (guess.0 .1))
             })
             .collect()
     }

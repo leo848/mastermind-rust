@@ -2,6 +2,7 @@ use std::ops::{Deref, DerefMut};
 
 use crate::mastermind::*;
 
+/// A code is a wrapper for four colors.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Code(pub [Colors; 4]);
 
@@ -19,6 +20,20 @@ impl DerefMut for Code {
 }
 
 impl Code {
+    /// Match this code with another one and get a CodeMatch.
+    ///
+    /// ```
+    /// use mastermind::mastermind::code::*;
+    /// use mastermind::mastermind::code_match::*;
+    /// use mastermind::mastermind::MatchLevels::*;
+    /// use mastermind::mastermind::Colors::*;
+    ///
+    /// let hidden_code = Code([ Yellow, Red, White, Green ]);
+    /// let guess = Code([ Red, Yellow, Violet, Green ]);
+    ///
+    /// let code_match = guess.match_code(&hidden_code);
+    /// assert_eq!(code_match, CodeMatch([ ExactMatch, ColorMatch, ColorMatch, NoMatch ]));
+    /// ```
     pub fn match_code(&self, other: &Code) -> code_match::CodeMatch {
         let mut matches = [MatchLevels::NoMatch; 4];
         for i in 0..matches.len() {
@@ -34,6 +49,17 @@ impl Code {
     }
 
     /// Trivial method that checks for duplicate colors.
+    ///
+    /// ```
+    /// use mastermind::mastermind::Colors::*;
+    /// use mastermind::mastermind::code::*;
+    ///
+    /// let unique_code = Code([ Yellow, Green, Blue, White ]);
+    /// assert!(unique_code.is_unique());
+    ///
+    /// let repeating_code = Code([ Green, Green, Violet, Red ]);
+    /// assert!(!repeating_code.is_unique());
+    /// ```
     pub fn is_unique(&self) -> bool {
         self.iter().unique().count() == self.len()
     }
@@ -56,6 +82,13 @@ impl Code {
 
     /// Returns all possible combinations of codes.
     /// Useful for a brute-force algorithm.
+    ///
+    /// ```
+    /// use mastermind::mastermind::code::*;
+    ///
+    /// let all_codes = Code::all();
+    /// assert_eq!(all_codes.len(), 6*5*4*3);
+    /// ```
     pub fn all() -> Vec<Code> {
         let mut all = Vec::new();
 
