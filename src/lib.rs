@@ -82,7 +82,7 @@ mod tests {
         let all_codes = code::Code::all();
         for _ in 0..80 {
             let random_code = code::Code::random();
-            assert_eq!(true, all_codes.contains(&random_code));
+            assert!(all_codes.contains(&random_code));
         }
         assert!(all_codes.iter().all(|code| code.is_unique()));
         assert_eq!(all_codes.len(), 6*5*4*3);
