@@ -21,7 +21,7 @@ impl DerefMut for Guess {
 pub struct Solver;
 
 impl Solver {
-    pub fn possible_codes(guesses: &Vec<Guess>) -> Vec<code::Code> {
+    pub fn possible_codes(guesses: &[Guess]) -> Vec<code::Code> {
         code::Code::all()
             .into_iter()
             .filter(|code| {
