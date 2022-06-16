@@ -85,6 +85,7 @@ mod tests {
             assert_eq!(true, all_codes.contains(&random_code));
         }
         assert!(all_codes.iter().all(|code| code.is_unique()));
+        assert_eq!(all_codes.len(), 6*5*4*3);
     }
 
     #[test]
