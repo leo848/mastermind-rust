@@ -46,7 +46,7 @@ pub fn run(matches: &ArgMatches) {
         }
         
         if matches.is_present("show-possible") {
-            print!(" \x1b[2;4m{}\x1b[0m", solver::possible_codes(&guesses).len()); 
+            print!(" \x1b[38;5;238m{}\x1b[0m", solver::possible_codes(&guesses).len()); 
         }
     }
 
