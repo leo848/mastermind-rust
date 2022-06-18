@@ -108,3 +108,10 @@ impl Code {
         all
     }
 }
+
+impl Prettify for Code {
+    fn prettify(&self) -> String {
+        itertools::Itertools::intersperse(self.iter().map(|c| c.prettify()), " ".to_string())
+            .collect()
+    }
+}

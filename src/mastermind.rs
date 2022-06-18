@@ -2,8 +2,9 @@ pub mod code;
 pub mod code_match;
 pub mod solver;
 
-use itertools::Itertools;
+use std::fmt;
 use colored::Colorize;
+use itertools::Itertools;
 use rand::{
     distributions::{Distribution, Standard},
     Rng,
@@ -26,16 +27,23 @@ pub enum Colors {
 
 impl Prettify for Colors {
     fn prettify(&self) -> String {
-        let symbol = "●";
+        let symbol = "⬤";
         match self {
-            Colors::Blue   => symbol.blue(),
-            Colors::Red    => symbol.red(),
-            Colors::Green  => symbol.green(),
+            Colors::Blue => symbol.blue(),
+            Colors::Red => symbol.red(),
+            Colors::Green => symbol.green(),
             Colors::Yellow => symbol.yellow(),
             Colors::Violet => symbol.truecolor(143, 0, 255),
-            Colors::White  => symbol.normal(),
-            _              => panic!("Prettify called on empty color"),
-        }.to_string()
+            Colors::White => symbol.normal(),
+            _ => panic!("Prettify called on empty color"),
+        }
+        .to_string()
+    }
+}
+
+impl fmt::Display for Colors {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        fmt::Debug::fmt(self, f)
     }
 }
 
