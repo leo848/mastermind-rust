@@ -6,6 +6,12 @@ use std::ops::{Deref, DerefMut};
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Guess(pub (code::Code, code_match::CodeMatch));
 
+impl Prettify for Guess {
+    fn prettify(&self) -> String {
+        format!("{}\t\t{}", self.0 .0.prettify(), self.0 .1.prettify())
+    }
+}
+
 impl Deref for Guess {
     type Target = (code::Code, code_match::CodeMatch);
     fn deref(&self) -> &Self::Target {

@@ -14,6 +14,11 @@ pub trait Prettify {
     fn prettify(&self) -> String;
 }
 
+pub trait GuessString {
+    fn to_guess_string(&self) -> String;
+    fn from_guess_string(string: &str) -> Self;
+}
+
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Colors {
     Empty,
@@ -35,6 +40,18 @@ impl Colors {
             Colors::Violet => 'v',
             Colors::White => 'w',
             _ => panic!("to_char called on empty color"),
+        }
+    }
+
+    pub fn from_char(character: char) -> Self {
+        match character {
+            'b' => Colors::Blue,
+            'r' => Colors::Red,
+            'g' => Colors::Green,
+            'y' => Colors::Yellow,
+            'v' => Colors::Violet,
+            'w' => Colors::White,
+            _ => panic!("unknown color char"),
         }
     }
 
@@ -94,16 +111,24 @@ impl MatchLevels {
             MatchLevels::ExactMatch => 'e',
         }
     }
+    pub fn from_char(character: char) -> Self {
+        match character {
+            'n' => MatchLevels::NoMatch,
+            'c' => MatchLevels::ColorMatch,
+            'e' => MatchLevels::ExactMatch,
+            _ => panic!("unknown match character"),
+        }
+    }
     pub fn all() -> [MatchLevels; 3] {
         use MatchLevels::*;
-        [NoMatch, ColorMatch, ExactMatch]
+        [ExactMatch, ColorMatch, NoMatch]
     }
 }
 
 impl Prettify for MatchLevels {
     fn prettify(&self) -> String {
         match self {
-            MatchLevels::NoMatch => "⬤".normal(),
+            MatchLevels::NoMatch => "◯".normal(),
             MatchLevels::ColorMatch => "⬤".normal(),
             MatchLevels::ExactMatch => "⬤".red(),
         }

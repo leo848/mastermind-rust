@@ -6,19 +6,6 @@ use crate::mastermind::*;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Code(pub [Colors; 4]);
 
-impl Deref for Code {
-    type Target = [Colors; 4];
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl DerefMut for Code {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
-    }
-}
-
 impl Code {
     /// Match this code with another one and get a CodeMatch.
     ///
@@ -106,6 +93,36 @@ impl Code {
         }
 
         all
+    }
+}
+
+impl GuessString for Code {
+    fn to_guess_string(&self) -> String {
+        self.iter().map(|color| color.to_char()).collect()
+    }
+    fn from_guess_string(string: &str) -> Self {
+        assert_eq!(string.len(), 4, "Wrong string length");
+        Code(
+            string
+                .chars()
+                .map(Colors::from_char)
+                .collect::<Vec<_>>()
+                .try_into()
+                .unwrap(),
+        )
+    }
+}
+
+impl Deref for Code {
+    type Target = [Colors; 4];
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for Code {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
     }
 }
 
