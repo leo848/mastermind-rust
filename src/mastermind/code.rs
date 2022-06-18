@@ -76,7 +76,7 @@ impl Code {
     /// let all_codes = Code::all();
     /// assert_eq!(all_codes.len(), 6*5*4*3);
     /// ```
-    pub fn all() -> Vec<Code> {
+    pub fn all() -> Vec<Self> {
         let mut all = Vec::new();
 
         for c1 in Colors::all() {
@@ -93,6 +93,11 @@ impl Code {
         }
 
         all
+    }
+
+    pub fn empty() -> Self {
+        use Colors::*;
+        Code([ Empty, Empty, Empty, Empty ])
     }
 }
 

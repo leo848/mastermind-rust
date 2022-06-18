@@ -21,7 +21,7 @@ pub fn run(matches: &ArgMatches) {
 
         println!();
         println!("{} possible combinations.", possible_codes.len());
-        println!("Enter guess #{}: ", counter);
+        print!("Enter guess #{}: ", counter);
 
         let mut input = String::new();
         io::stdin()

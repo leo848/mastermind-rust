@@ -1,22 +1,7 @@
 use super::*;
 
 pub fn print_info() {
-    println!("The following colors are available:");
-    for color in Colors::all() {
-        println!("{}: {} ({})", color.prettify(), color, color.to_char());
-    }
-    println!();
-
-    println!("The following match levels are available:");
-    for match_level in MatchLevels::all() {
-        println!(
-            "{}: {} ({})",
-            match_level.prettify(),
-            match_level,
-            match_level.to_char()
-        );
-    }
-    println!();
+    print_items();
 
     println!("You can input a guess in the following form:");
     println!("<4 colors> <matches>\n");
@@ -32,3 +17,25 @@ pub fn print_info() {
     }
 }
 
+pub fn print_items() {
+    print_colors();
+
+    println!("The following match levels are available:");
+    for match_level in MatchLevels::all() {
+        println!(
+            "{}: {} ({})",
+            match_level.prettify(),
+            match_level,
+            match_level.to_char()
+        );
+    }
+    println!();
+}
+
+pub fn print_colors() {
+    println!("The following colors are available:");
+    for color in Colors::all() {
+        println!("{}: {} ({})", color.prettify(), color, color.to_char());
+    }
+    println!();
+}
