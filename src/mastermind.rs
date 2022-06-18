@@ -2,13 +2,13 @@ pub mod code;
 pub mod code_match;
 pub mod solver;
 
-use std::fmt;
 use colored::Colorize;
 use itertools::Itertools;
 use rand::{
     distributions::{Distribution, Standard},
     Rng,
 };
+use std::fmt;
 
 pub trait Prettify {
     fn prettify(&self) -> String;
@@ -34,8 +34,13 @@ impl Colors {
             Colors::Yellow => 'y',
             Colors::Violet => 'v',
             Colors::White => 'w',
-            _ => panic!("to_char called on empty color")
+            _ => panic!("to_char called on empty color"),
         }
+    }
+
+    pub fn all() -> [Colors; 6] {
+        use Colors::*;
+        [Blue, Red, Green, Yellow, Violet, White]
     }
 }
 
@@ -74,16 +79,40 @@ impl Distribution<Colors> for Standard {
     }
 }
 
-impl Colors {
-    pub fn all() -> [Colors; 6] {
-        use Colors::*;
-        [Blue, Red, Green, Yellow, Violet, White]
-    }
-}
-
 #[derive(Debug, Copy, Clone, PartialOrd, Ord, PartialEq, Eq)]
 pub enum MatchLevels {
     NoMatch,
     ColorMatch,
     ExactMatch,
+}
+
+impl MatchLevels {
+    pub fn to_char(&self) -> char {
+        match self {
+            MatchLevels::NoMatch => 'n',
+            MatchLevels::ColorMatch => 'c',
+            MatchLevels::ExactMatch => 'e',
+        }
+    }
+    pub fn all() -> [MatchLevels; 3] {
+        use MatchLevels::*;
+        [NoMatch, ColorMatch, ExactMatch]
+    }
+}
+
+impl Prettify for MatchLevels {
+    fn prettify(&self) -> String {
+        match self {
+            MatchLevels::NoMatch => "⬤".normal(),
+            MatchLevels::ColorMatch => "⬤".normal(),
+            MatchLevels::ExactMatch => "⬤".red(),
+        }
+        .to_string()
+    }
+}
+
+impl fmt::Display for MatchLevels {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        fmt::Debug::fmt(self, f)
+    }
 }
