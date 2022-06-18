@@ -25,6 +25,20 @@ pub enum Colors {
     White,
 }
 
+impl Colors {
+    pub fn to_char(&self) -> char {
+        match self {
+            Colors::Blue => 'b',
+            Colors::Red => 'r',
+            Colors::Green => 'g',
+            Colors::Yellow => 'y',
+            Colors::Violet => 'v',
+            Colors::White => 'w',
+            _ => panic!("to_char called on empty color")
+        }
+    }
+}
+
 impl Prettify for Colors {
     fn prettify(&self) -> String {
         let symbol = "⬤";
@@ -35,7 +49,7 @@ impl Prettify for Colors {
             Colors::Yellow => symbol.yellow(),
             Colors::Violet => symbol.truecolor(143, 0, 255),
             Colors::White => symbol.normal(),
-            _ => panic!("Prettify called on empty color"),
+            _ => panic!("prettify called on empty color"),
         }
         .to_string()
     }
