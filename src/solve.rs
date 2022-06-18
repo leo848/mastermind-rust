@@ -38,6 +38,7 @@ pub fn run(matches: &ArgMatches) {
                     "not enough elements"
                 }
             );
+            counter -= 1;
             continue;
         }
 
