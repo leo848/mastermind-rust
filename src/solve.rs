@@ -10,13 +10,13 @@ pub fn run(matches: &ArgMatches) {
     println!("{}", "Solve mode\n".bold());
 
     if !matches.is_present("no-info") {
-        print_info();
+        share::print_info();
     }
 
     let mut possible_codes = Code::all();
     let mut counter = 0;
 
-    loop {
+    while possible_codes.len() > 1 {
         counter += 1;
 
         println!();
@@ -56,37 +56,13 @@ pub fn run(matches: &ArgMatches) {
             .filter(|code| code.match_code(&guess.0 .0) == guess.0 .1)
             .collect();
     }
-}
 
-fn print_info() {
-    println!("The following colors are available:");
-    for color in Colors::all() {
-        println!("{}: {} ({})", color.prettify(), color, color.to_char());
-    }
     println!();
-
-    println!("The following match levels are available:");
-    for match_level in MatchLevels::all() {
-        println!(
-            "{}: {} ({})",
-            match_level.prettify(),
-            match_level,
-            match_level.to_char()
-        );
-    }
-    println!();
-
-    println!("You can input a guess in the following form:");
-    println!("<4 colors> <matches>\n");
-    println!("Examples:");
-    for _ in 0..5 {
-        let random_code = code::Code::random();
-        let code_match = code::Code::random().match_code(&random_code);
-        println!(
-            "{} {}",
-            random_code.to_guess_string(),
-            code_match.to_guess_string()
-        );
+    if possible_codes.len() == 1 {
+        println!("{}", "Lösung gefunden!".bold().green());
+        println!("{}", possible_codes[0].prettify())
+    } else {
+        println!("{}", "Leider kein Ergebnis gefunden - ungültige Eingabe?".bold().red());
     }
 }
 

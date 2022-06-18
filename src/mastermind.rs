@@ -1,6 +1,7 @@
 pub mod code;
 pub mod code_match;
 pub mod solver;
+pub mod share;
 
 use colored::Colorize;
 use itertools::Itertools;
