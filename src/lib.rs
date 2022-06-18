@@ -110,7 +110,7 @@ mod tests {
             )),
         ];
 
-        let possible_codes = solver::Solver::possible_codes(&guesses);
+        let possible_codes = solver::possible_codes(&guesses);
         assert!(possible_codes.contains(&true_code));
     }
 
@@ -125,7 +125,7 @@ mod tests {
         ))];
 
         assert_eq!(
-            solver::Solver::possible_codes(&guesses),
+            solver::possible_codes(&guesses),
             vec![code::Code([Red, White, Green, Blue])]
         );
     }
@@ -149,7 +149,7 @@ mod tests {
         ];
 
         assert_eq!(
-            solver::Solver::possible_codes(&guesses),
+            solver::possible_codes(&guesses),
             vec![
                 code::Code([Blue, White, Violet, Yellow]),
                 code::Code([Yellow, White, Violet, Red])

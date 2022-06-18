@@ -19,21 +19,17 @@ impl DerefMut for Guess {
     }
 }
 
-pub struct Solver;
-
-impl Solver {
-    /// Get the possible codes from any number of guesses
-    pub fn possible_codes(guesses: &[Guess]) -> Vec<code::Code> {
-        // Return all codes
-        code::Code::all()
-            .into_iter()
-            // where for every code
-            .filter(|code| {
-                guesses
-                    .iter()
-                    // every guess matches
-                    .all(|guess| (guess.0 .0).match_code(code) == (guess.0 .1))
-            })
-            .collect()
-    }
+/// Get the possible codes from any number of guesses
+pub fn possible_codes(guesses: &[Guess]) -> Vec<code::Code> {
+    // Return all codes
+    code::Code::all()
+        .into_iter()
+        // where for every code
+        .filter(|code| {
+            guesses
+                .iter()
+                // every guess matches
+                .all(|guess| (guess.0 .0).match_code(code) == (guess.0 .1))
+        })
+        .collect()
 }
