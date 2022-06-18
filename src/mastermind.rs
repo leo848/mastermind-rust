@@ -28,13 +28,13 @@ impl Prettify for Colors {
     fn prettify(&self) -> String {
         let symbol = "●";
         match self {
-            Colors::Blue => symbol.blue(),
-            Colors::Red => symbol.red(),
-            Colors::Green => symbol.green(),
+            Colors::Blue   => symbol.blue(),
+            Colors::Red    => symbol.red(),
+            Colors::Green  => symbol.green(),
             Colors::Yellow => symbol.yellow(),
             Colors::Violet => symbol.truecolor(143, 0, 255),
-            Colors::White => symbol.normal(),
-            _ => panic!("Prettify called on empty color"),
+            Colors::White  => symbol.normal(),
+            _              => panic!("Prettify called on empty color"),
         }.to_string()
     }
 }
