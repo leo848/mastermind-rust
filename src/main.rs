@@ -2,13 +2,13 @@ pub mod play;
 pub mod solve;
 
 use clap::{Arg, Command};
-use clearscreen;
 
 fn cli() -> clap::Command<'static> {
     Command::new("mastermind")
         .version("0.1.0")
         .author("Leo Blume <leoblume@gmx.de>")
         .about("Play or solve mastermind.")
+        .arg(Arg::new("no-clear").long("no-clear").short('C').help("Don't clear the screen."))
         .subcommand_required(true)
         .subcommand(
             Command::new("play")
@@ -35,7 +35,9 @@ fn cli() -> clap::Command<'static> {
 fn main() {
     let matches = cli().get_matches();
 
-    clearscreen::clear().expect("failed to clear screen");
+    if !matches.is_present("no-clear") {
+        clearscreen::clear().expect("failed to clear screen");
+    }
 
     match matches.subcommand() {
         Some(("play", sub_matches)) => {

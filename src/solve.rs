@@ -59,10 +59,10 @@ pub fn run(matches: &ArgMatches) {
 
     println!();
     if possible_codes.len() == 1 {
-        println!("{}", "Lösung gefunden!".bold().green());
+        println!("{}", "Solution found!".bold().green());
         println!("{}", possible_codes[0].prettify())
     } else {
-        println!("{}", "Leider kein Ergebnis gefunden - ungültige Eingabe?".bold().red());
+        println!("{}", "Didn't find a solution - invalid input?".bold().red());
     }
 }
 
