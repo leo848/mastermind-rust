@@ -3,7 +3,7 @@ use std::ops::{Deref, DerefMut};
 use crate::mastermind::*;
 
 /// A code is a wrapper for four colors.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Code(pub [Colors; 4]);
 
 impl Code {
@@ -97,7 +97,7 @@ impl Code {
 
     pub fn empty() -> Self {
         use Colors::*;
-        Code([ Empty, Empty, Empty, Empty ])
+        Code([Empty, Empty, Empty, Empty])
     }
 }
 

@@ -1,9 +1,13 @@
 use mastermind::mastermind::*;
 use mastermind::{self, Code};
 
-use std::{io::{stdin, stdout, Write}, thread, time::Duration};
 use clap::ArgMatches;
 use colored::Colorize;
+use std::{
+    io::{stdin, stdout, Write},
+    thread,
+    time::Duration,
+};
 
 pub fn run(matches: &ArgMatches) {
     println!("{}", "Play mode\n".bold());
@@ -14,6 +18,7 @@ pub fn run(matches: &ArgMatches) {
 
     let actual_code = Code::random();
     let mut guess = Code::empty();
+    let mut guesses: Vec<solver::Guess> = Vec::new();
     let mut counter = 0;
 
     while guess != actual_code {
@@ -30,13 +35,24 @@ pub fn run(matches: &ArgMatches) {
         print!("\x1b[1A\x1b[0J{}\t\t", guess.prettify());
         stdout().flush().unwrap();
 
+        let code_match = actual_code.match_code(&guess);
+        guesses.push(solver::Guess((guess, code_match)));
+
         thread::sleep(Duration::from_millis(300));
-        for code_match in actual_code.match_code(&guess).iter() {
+        for code_match in code_match.iter() {
             print!("{} ", code_match.prettify());
             stdout().flush().unwrap();
             thread::sleep(Duration::from_millis(300));
         }
+        
+        if matches.is_present("show-possible") {
+            print!(" \x1b[2;4m{}\x1b[0m", solver::possible_codes(&guesses).len()); 
+        }
     }
 
-    println!("\n\n{} {}", "Solved!".green().bold(), format!("You needed {} tries", counter));
+    println!(
+        "\n\n{} {}",
+        "Solved!".green().bold(),
+        format!("You needed {} tries", counter)
+    );
 }

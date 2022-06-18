@@ -3,7 +3,7 @@ use crate::mastermind::*;
 use std::ops::{Deref, DerefMut};
 
 /// A guess contains a Code and a corresponding CodeMatch.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Guess(pub (code::Code, code_match::CodeMatch));
 
 impl Prettify for Guess {

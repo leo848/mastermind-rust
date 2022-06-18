@@ -8,7 +8,12 @@ fn cli() -> clap::Command<'static> {
         .version("0.1.0")
         .author("Leo Blume <leoblume@gmx.de>")
         .about("Play or solve mastermind.")
-        .arg(Arg::new("no-clear").long("no-clear").short('C').help("Don't clear the screen."))
+        .arg(
+            Arg::new("no-clear")
+                .long("no-clear")
+                .short('C')
+                .help("Don't clear the screen."),
+        )
         .subcommand_required(true)
         .subcommand(
             Command::new("play")
@@ -18,6 +23,12 @@ fn cli() -> clap::Command<'static> {
                         .long("no-info")
                         .short('I')
                         .help("Don't show information."),
+                )
+                .arg(
+                    Arg::new("show-possible")
+                        .long("num")
+                        .short('n')
+                        .help("Show the remaining amount of possible codes."),
                 ),
         )
         .subcommand(
