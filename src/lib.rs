@@ -1,5 +1,9 @@
 pub mod mastermind;
 
+pub use crate::mastermind::{
+    Colors, code::Code, code_match::CodeMatch
+};
+
 #[cfg(test)]
 mod tests {
     use super::mastermind::*;

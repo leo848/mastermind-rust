@@ -1,7 +1,7 @@
-pub mod solve;
 pub mod play;
+pub mod solve;
 
-use clap::{Command};
+use clap::Command;
 
 fn cli() -> clap::Command<'static> {
     Command::new("mastermind")
@@ -19,10 +19,10 @@ fn main() {
     match matches.subcommand() {
         Some(("play", _sub_matches)) => {
             play::run();
-        },
+        }
         Some(("solve", _sub_matches)) => {
             solve::run();
-        },
-        _ => unreachable!()
+        }
+        _ => unreachable!(),
     }
 }
