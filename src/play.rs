@@ -27,7 +27,7 @@ pub fn run(matches: &ArgMatches) {
         stdin().read_line(&mut input).expect("Failed to read line");
         guess = Code::from_guess_string(&input.trim());
 
-        print!("\x1b[1A;0J{}\t\t", guess.prettify());
+        print!("\x1b[1A\x1b[0J{}\t\t", guess.prettify());
         stdout().flush().unwrap();
 
         thread::sleep(Duration::from_millis(300));
