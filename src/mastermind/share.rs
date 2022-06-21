@@ -39,3 +39,12 @@ pub fn print_colors() {
     }
     println!();
 }
+
+pub fn prompt_for_code() -> Option<code::Code> {
+    use std::io::stdin;
+
+    let mut input = String::new();
+    stdin().read_line(&mut input).ok()?;
+
+    Some(code::Code::from_guess_string(&input.trim()))
+}

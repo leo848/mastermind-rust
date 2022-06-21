@@ -4,7 +4,7 @@ use mastermind::{self, Code};
 use clap::ArgMatches;
 use colored::Colorize;
 use std::{
-    io::{stdin, stdout, Write},
+    io::{stdout, Write},
     thread,
     time::Duration,
 };
@@ -32,9 +32,7 @@ pub fn run(matches: &ArgMatches) {
         print!("Enter guess #{}: ", counter);
         stdout().flush().unwrap();
 
-        let mut input = String::new();
-        stdin().read_line(&mut input).expect("Failed to read line");
-        guess = Code::from_guess_string(&input.trim());
+        guess = share::prompt_for_code().unwrap();
 
         print!("\x1b[1A\x1b[0J{}\t\t", guess.prettify());
         stdout().flush().unwrap();
