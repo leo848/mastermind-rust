@@ -29,6 +29,13 @@ fn cli() -> clap::Command<'static> {
                         .long("num")
                         .short('n')
                         .help("Show the remaining amount of possible codes."),
+                )
+                .arg(
+                    Arg::new("given-code")
+                        .long("code")
+                        .short('c')
+                        .takes_value(true)
+                        .help("Use the given code."),
                 ),
         )
         .subcommand(

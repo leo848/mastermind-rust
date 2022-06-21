@@ -16,7 +16,11 @@ pub fn run(matches: &ArgMatches) {
         share::print_colors();
     }
 
-    let actual_code = Code::random();
+    let actual_code = match matches.value_of("given-code") {
+        None => Code::random(),
+        Some(code) => Code::from_guess_string(code),
+    };
+
     let mut guess = Code::empty();
     let mut guesses: Vec<solver::Guess> = Vec::new();
     let mut counter = 0;
