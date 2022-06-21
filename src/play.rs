@@ -46,7 +46,7 @@ pub fn run(matches: &ArgMatches) {
         }
         
         if matches.is_present("show-possible") {
-            print!(" \x1b[38;5;238m{}\x1b[0m", solver::possible_codes(&guesses).len()); 
+            show_possible_codes(&guesses);
         }
     }
 
@@ -55,4 +55,8 @@ pub fn run(matches: &ArgMatches) {
         "Solved!".green().bold(),
         format!("You needed {} tries", counter)
     );
+}
+
+fn show_possible_codes(guesses: &[solver::Guess]) {
+    print!(" \x1b[38;5;238m{}\x1b[0m", solver::possible_codes(&guesses).len()); 
 }
