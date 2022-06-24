@@ -35,7 +35,7 @@ fn cli() -> clap::Command<'static> {
                         .long("code")
                         .short('c')
                         .takes_value(true)
-                        .help("Use the given code."),
+                        .help("Use the given code (instead of a random one)."),
                 ),
         )
         .subcommand(

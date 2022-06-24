@@ -4,7 +4,10 @@ use mastermind::{self, Code, CodeMatch};
 use clap::ArgMatches;
 use colored::Colorize;
 use itertools::Itertools;
-use std::{error, io};
+use std::{
+    error,
+    io::{self, Write},
+};
 
 pub fn run(matches: &ArgMatches) {
     println!("{}", "Solve mode\n".bold());
@@ -14,6 +17,8 @@ pub fn run(matches: &ArgMatches) {
     }
 
     let mut possible_codes = Code::all();
+    let mut guess_history: Vec<solver::Guess> = Vec::new();
+
     let mut counter = 0;
 
     while possible_codes.len() > 1 {
@@ -21,7 +26,16 @@ pub fn run(matches: &ArgMatches) {
 
         println!();
         println!("{} possible combinations.", possible_codes.len());
+
+        let (amount, code) = solver::best_guess(&guess_history);
+        println!(
+            "Best guess: {} (max {} remaining codes)",
+            code.prettify(),
+            amount
+        );
+
         print!("Enter guess #{}: ", counter);
+        io::stdout().flush().unwrap();
 
         let mut input = String::new();
         io::stdin()
@@ -49,12 +63,15 @@ pub fn run(matches: &ArgMatches) {
                 continue;
             }
         };
+
         println!("{}", guess.prettify());
 
         possible_codes = possible_codes
             .into_iter()
             .filter(|code| code.match_code(&guess.0 .0) == guess.0 .1)
             .collect();
+
+        guess_history.push(guess);
     }
 
     println!();

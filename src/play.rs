@@ -46,19 +46,21 @@ pub fn run(matches: &ArgMatches) {
             stdout().flush().unwrap();
             thread::sleep(Duration::from_millis(300));
         }
-        
+
         if matches.is_present("show-possible") {
             show_possible_codes(&guesses);
         }
     }
 
     println!(
-        "\n\n{} {}",
+        "\n\n{} You needed {counter} tries",
         "Solved!".green().bold(),
-        format!("You needed {} tries", counter)
     );
 }
 
 fn show_possible_codes(guesses: &[solver::Guess]) {
-    print!(" \x1b[38;5;238m{}\x1b[0m", solver::possible_codes(&guesses).len()); 
+    print!(
+        " \x1b[38;5;238m{}\x1b[0m",
+        solver::possible_codes(guesses).len()
+    );
 }
