@@ -33,7 +33,7 @@ mod tests {
         let code = code::Code([yellow, Red, White, Green]);
 
         let equal = code::Code([Yellow, red, White, Green]);
-        let unequal = code::Code([Green, Red, Violet, Blue]);
+        let unequal = code::Code([Green, Red, Purple, Blue]);
 
         assert_eq!(code, equal);
         assert_ne!(code, unequal);
@@ -44,7 +44,7 @@ mod tests {
         use Colors::*;
 
         let code = code::Code([Yellow, Red, White, Green]);
-        let guess = code::Code([Red, Yellow, White, Violet]);
+        let guess = code::Code([Red, Yellow, White, Purple]);
 
         assert_ne!(code, guess);
 
@@ -95,7 +95,7 @@ mod tests {
         use Colors::*;
         use MatchLevels::*;
 
-        let true_code = code::Code([Red, Green, Violet, Blue]);
+        let true_code = code::Code([Red, Green, Purple, Blue]);
 
         let guesses = vec![
             solver::Guess((
@@ -103,7 +103,7 @@ mod tests {
                 code_match::CodeMatch([ColorMatch, ColorMatch, NoMatch, NoMatch]),
             )),
             solver::Guess((
-                code::Code([Green, Yellow, Violet, Blue]),
+                code::Code([Green, Yellow, Purple, Blue]),
                 code_match::CodeMatch([ExactMatch, ExactMatch, ColorMatch, NoMatch]),
             )),
             solver::Guess((
@@ -137,7 +137,7 @@ mod tests {
         use Colors::*;
         use MatchLevels::*;
 
-        assert!(!code::Code([Blue, White, Violet, Blue]).is_unique());
+        assert!(!code::Code([Blue, White, Purple, Blue]).is_unique());
 
         let guesses = vec![
             solver::Guess((
@@ -145,7 +145,7 @@ mod tests {
                 code_match::CodeMatch([ExactMatch, ColorMatch, NoMatch, NoMatch]),
             )),
             solver::Guess((
-                code::Code([Blue, Green, Violet, Red]),
+                code::Code([Blue, Green, Purple, Red]),
                 code_match::CodeMatch([ExactMatch, ExactMatch, NoMatch, NoMatch]),
             )),
         ];
@@ -153,8 +153,8 @@ mod tests {
         assert_eq!(
             solver::possible_codes(&guesses),
             vec![
-                code::Code([Blue, White, Violet, Yellow]),
-                code::Code([Yellow, White, Violet, Red])
+                code::Code([Blue, White, Purple, Yellow]),
+                code::Code([Yellow, White, Purple, Red])
             ]
         );
     }

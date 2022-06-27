@@ -27,7 +27,7 @@ pub enum Colors {
     Red,
     Green,
     Yellow,
-    Violet,
+    Purple,
     White,
 }
 
@@ -42,7 +42,7 @@ impl Colors {
             Colors::Red => 'r',
             Colors::Green => 'g',
             Colors::Yellow => 'y',
-            Colors::Violet => 'v',
+            Colors::Purple => 'p',
             Colors::White => 'w',
             Colors::Empty => panic!("to_char called on empty color"),
         }
@@ -58,7 +58,7 @@ impl Colors {
             'r' => Colors::Red,
             'g' => Colors::Green,
             'y' => Colors::Yellow,
-            'v' => Colors::Violet,
+            'p' => Colors::Purple,
             'w' => Colors::White,
             _ => panic!("unknown color char"),
         }
@@ -66,7 +66,7 @@ impl Colors {
 
     pub fn all() -> [Colors; 6] {
         use Colors::*;
-        [Blue, Red, Green, Yellow, Violet, White]
+        [Blue, Red, Green, Yellow, Purple, White]
     }
 }
 
@@ -82,7 +82,7 @@ impl Prettify for Colors {
             Colors::Red => symbol.red(),
             Colors::Green => symbol.green(),
             Colors::Yellow => symbol.yellow(),
-            Colors::Violet => symbol.truecolor(143, 0, 255),
+            Colors::Purple => symbol.truecolor(143, 0, 255),
             Colors::White => symbol.normal(),
             Colors::Empty => panic!("prettify called on empty color"),
         }
@@ -103,7 +103,7 @@ impl Distribution<Colors> for Standard {
             1 => Colors::Red,
             2 => Colors::Green,
             3 => Colors::Yellow,
-            4 => Colors::Violet,
+            4 => Colors::Purple,
             _ => Colors::White,
         }
     }

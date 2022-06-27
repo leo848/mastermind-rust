@@ -16,7 +16,7 @@ impl Code {
     /// use mastermind::mastermind::Colors::*;
     ///
     /// let hidden_code = Code([ Yellow, Red, White, Green ]);
-    /// let guess = Code([ Red, Yellow, Violet, Green ]);
+    /// let guess = Code([ Red, Yellow, Purple, Green ]);
     ///
     /// let code_match = guess.match_code(&hidden_code);
     /// assert_eq!(code_match, CodeMatch([ ExactMatch, ColorMatch, ColorMatch, NoMatch ]));
@@ -44,7 +44,7 @@ impl Code {
     /// let unique_code = Code([ Yellow, Green, Blue, White ]);
     /// assert!(unique_code.is_unique());
     ///
-    /// let repeating_code = Code([ Green, Green, Violet, Red ]);
+    /// let repeating_code = Code([ Green, Green, Purple, Red ]);
     /// assert!(!repeating_code.is_unique());
     /// ```
     pub fn is_unique(&self) -> bool {
