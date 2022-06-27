@@ -7,7 +7,7 @@ use crate::mastermind::*;
 pub struct Code(pub [Colors; 4]);
 
 impl Code {
-    /// Match this code with another one and get a CodeMatch.
+    /// Match this code with another one and get a `CodeMatch`.
     ///
     /// ```
     /// use mastermind::mastermind::code::*;
@@ -96,14 +96,14 @@ impl Code {
     }
 
     pub fn empty() -> Self {
-        use Colors::*;
+        use Colors::Empty;
         Code([Empty, Empty, Empty, Empty])
     }
 }
 
 impl GuessString for Code {
     fn to_guess_string(&self) -> String {
-        self.iter().map(|color| color.to_char()).collect()
+        self.iter().map(Colors::to_char).collect()
     }
     fn from_guess_string(string: &str) -> Self {
         assert_eq!(string.len(), 4, "Wrong string length");
@@ -133,7 +133,7 @@ impl DerefMut for Code {
 
 impl Prettify for Code {
     fn prettify(&self) -> String {
-        itertools::Itertools::intersperse(self.iter().map(|c| c.prettify()), " ".to_string())
+        itertools::Itertools::intersperse(self.iter().map(Prettify::prettify), " ".to_string())
             .collect()
     }
 }

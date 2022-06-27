@@ -27,12 +27,8 @@ pub fn run(matches: &ArgMatches) {
         println!();
         println!("{} possible combinations.", possible_codes.len());
 
-        let (amount, code) = solver::best_guess(&guess_history);
-        println!(
-            "Best guess: {} (max {} remaining codes)",
-            code.prettify(),
-            amount
-        );
+        let code = solver::best_guess(&guess_history);
+        println!("Best guess: {}", code.prettify(),);
 
         print!("Enter guess #{}: ", counter);
         io::stdout().flush().unwrap();
@@ -77,7 +73,7 @@ pub fn run(matches: &ArgMatches) {
     println!();
     if possible_codes.len() == 1 {
         println!("{}", "Solution found!".bold().green());
-        println!("{}", possible_codes[0].prettify())
+        println!("{}", possible_codes[0].prettify());
     } else {
         println!("{}", "Didn't find a solution - invalid input?".bold().red());
     }

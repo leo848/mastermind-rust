@@ -32,6 +32,10 @@ pub enum Colors {
 }
 
 impl Colors {
+    /// Return a char from a color.
+    ///
+    /// # Panics
+    /// If the color is empty.
     pub fn to_char(&self) -> char {
         match self {
             Colors::Blue => 'b',
@@ -40,10 +44,14 @@ impl Colors {
             Colors::Yellow => 'y',
             Colors::Violet => 'v',
             Colors::White => 'w',
-            _ => panic!("to_char called on empty color"),
+            Colors::Empty => panic!("to_char called on empty color"),
         }
     }
 
+    /// Create a color from a character.
+    ///
+    /// # Panics
+    /// If the character is not a valid color.
     pub fn from_char(character: char) -> Self {
         match character {
             'b' => Colors::Blue,
@@ -63,6 +71,10 @@ impl Colors {
 }
 
 impl Prettify for Colors {
+    /// Prettify this color to a ANSI colored unicode character.
+    ///
+    /// # Panics
+    /// This method will panic if called on an empty color.
     fn prettify(&self) -> String {
         let symbol = "⬤";
         match self {
@@ -72,7 +84,7 @@ impl Prettify for Colors {
             Colors::Yellow => symbol.yellow(),
             Colors::Violet => symbol.truecolor(143, 0, 255),
             Colors::White => symbol.normal(),
-            _ => panic!("prettify called on empty color"),
+            Colors::Empty => panic!("prettify called on empty color"),
         }
         .to_string()
     }
@@ -112,6 +124,10 @@ impl MatchLevels {
             MatchLevels::ExactMatch => 'e',
         }
     }
+    /// Create a `MatchLevels` from a character.
+    ///
+    /// # Panics
+    /// If the character is not a valid match level.
     pub fn from_char(character: char) -> Self {
         match character {
             'n' => MatchLevels::NoMatch,
