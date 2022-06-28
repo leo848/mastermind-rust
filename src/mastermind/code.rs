@@ -54,7 +54,7 @@ impl Code {
     /// Return a random code.
     pub fn random() -> Self {
         let mut rng = rand::thread_rng();
-        let mut values: [Colors; 4] = [Colors::Empty; 4];
+        let mut values: [Colors; 4] = [rng.gen(); 4];
 
         for i in 0..4 {
             let mut new_value: Colors = rng.gen();
@@ -94,11 +94,6 @@ impl Code {
 
         all
     }
-
-    pub fn empty() -> Self {
-        use Colors::Empty;
-        Code([Empty, Empty, Empty, Empty])
-    }
 }
 
 impl GuessString for Code {
@@ -111,6 +106,7 @@ impl GuessString for Code {
             string
                 .chars()
                 .map(Colors::from_char)
+                .map(Option::unwrap) // TODO: proper error handling here
                 .collect::<Vec<_>>()
                 .try_into()
                 .unwrap(),

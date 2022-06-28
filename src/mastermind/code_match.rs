@@ -14,6 +14,7 @@ impl GuessString for CodeMatch {
             guess
                 .chars()
                 .map(MatchLevels::from_char)
+                .map(Option::unwrap) // TODO: proper error handling here
                 .collect::<Vec<_>>()
                 .try_into()
                 .unwrap(),

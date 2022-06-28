@@ -21,24 +21,24 @@ pub fn run(matches: &ArgMatches) {
         Some(code) => Code::from_guess_string(code),
     };
 
-    let mut guess = Code::empty();
+    let mut guess = None::<Code>;
     let mut guesses: Vec<solver::Guess> = Vec::new();
     let mut counter = 0;
 
-    while guess != actual_code {
+    while guess.is_none() || guess.unwrap() != actual_code {
         counter += 1;
 
         println!();
         print!("Enter guess #{}: ", counter);
         stdout().flush().unwrap();
 
-        guess = share::prompt_for_code().unwrap();
+        let guessed_code = share::prompt_for_code().unwrap();
 
-        print!("\x1b[1A\x1b[0J{}\t\t", guess.prettify());
+        print!("\x1b[1A\x1b[0J{}\t\t", guessed_code.prettify());
         stdout().flush().unwrap();
 
-        let code_match = actual_code.match_code(&guess);
-        guesses.push(solver::Guess((guess, code_match)));
+        let code_match = actual_code.match_code(&guessed_code);
+        guesses.push(solver::Guess((guessed_code, code_match)));
 
         thread::sleep(Duration::from_millis(300));
         for code_match in code_match.iter() {
@@ -50,6 +50,8 @@ pub fn run(matches: &ArgMatches) {
         if matches.is_present("show-possible") {
             show_possible_codes(&guesses);
         }
+
+        guess = Some(guessed_code);
     }
 
     println!(

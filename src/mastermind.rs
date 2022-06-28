@@ -22,7 +22,6 @@ pub trait GuessString {
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Colors {
-    Empty,
     Blue,
     Red,
     Green,
@@ -33,9 +32,6 @@ pub enum Colors {
 
 impl Colors {
     /// Return a char from a color.
-    ///
-    /// # Panics
-    /// If the color is empty.
     pub fn to_char(&self) -> char {
         match self {
             Colors::Blue => 'b',
@@ -44,23 +40,19 @@ impl Colors {
             Colors::Yellow => 'y',
             Colors::Purple => 'p',
             Colors::White => 'w',
-            Colors::Empty => panic!("to_char called on empty color"),
         }
     }
 
     /// Create a color from a character.
-    ///
-    /// # Panics
-    /// If the character is not a valid color.
-    pub fn from_char(character: char) -> Self {
+    pub fn from_char(character: char) -> Option<Self> {
         match character {
-            'b' => Colors::Blue,
-            'r' => Colors::Red,
-            'g' => Colors::Green,
-            'y' => Colors::Yellow,
-            'p' => Colors::Purple,
-            'w' => Colors::White,
-            _ => panic!("unknown color char"),
+            'b' => Some(Colors::Blue),
+            'r' => Some(Colors::Red),
+            'g' => Some(Colors::Green),
+            'y' => Some(Colors::Yellow),
+            'p' => Some(Colors::Purple),
+            'w' => Some(Colors::White),
+            _ => None,
         }
     }
 
@@ -72,9 +64,6 @@ impl Colors {
 
 impl Prettify for Colors {
     /// Prettify this color to a ANSI colored unicode character.
-    ///
-    /// # Panics
-    /// This method will panic if called on an empty color.
     fn prettify(&self) -> String {
         let symbol = "⬤";
         match self {
@@ -84,7 +73,6 @@ impl Prettify for Colors {
             Colors::Yellow => symbol.yellow(),
             Colors::Purple => symbol.truecolor(143, 0, 255),
             Colors::White => symbol.normal(),
-            Colors::Empty => panic!("prettify called on empty color"),
         }
         .to_string()
     }
@@ -125,15 +113,12 @@ impl MatchLevels {
         }
     }
     /// Create a `MatchLevels` from a character.
-    ///
-    /// # Panics
-    /// If the character is not a valid match level.
-    pub fn from_char(character: char) -> Self {
+    pub fn from_char(character: char) -> Option<Self> {
         match character {
-            'n' => MatchLevels::NoMatch,
-            'c' => MatchLevels::ColorMatch,
-            'e' => MatchLevels::ExactMatch,
-            _ => panic!("unknown match character"),
+            'n' => Some(MatchLevels::NoMatch),
+            'c' => Some(MatchLevels::ColorMatch),
+            'e' => Some(MatchLevels::ExactMatch),
+            _ => None,
         }
     }
     pub fn all() -> [MatchLevels; 3] {
