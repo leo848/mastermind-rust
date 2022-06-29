@@ -100,17 +100,9 @@ impl GuessString for Code {
     fn to_guess_string(&self) -> String {
         self.iter().map(Colors::to_char).collect()
     }
-    fn from_guess_string(string: &str) -> Self {
-        assert_eq!(string.len(), 4, "Wrong string length");
-        Code(
-            string
-                .chars()
-                .map(Colors::from_char)
-                .map(Option::unwrap) // TODO: proper error handling here
-                .collect::<Vec<_>>()
-                .try_into()
-                .unwrap(),
-        )
+    fn from_guess_string(string: &str) -> Option<Self> {
+        let colors = string.chars().map(Colors::from_char).collect::<Option<Vec<Colors>>>()?;
+        Some(Code(colors.try_into().ok()?))
     }
 }
 

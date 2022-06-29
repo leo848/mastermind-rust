@@ -8,17 +8,20 @@ impl GuessString for CodeMatch {
     fn to_guess_string(&self) -> String {
         self.iter().map(MatchLevels::to_char).collect()
     }
-    fn from_guess_string(guess: &str) -> Self {
-        assert_eq!(guess.len(), 4, "Wrong string length");
-        CodeMatch(
-            guess
-                .chars()
-                .map(MatchLevels::from_char)
-                .map(Option::unwrap) // TODO: proper error handling here
-                .collect::<Vec<_>>()
-                .try_into()
-                .unwrap(),
-        )
+    fn from_guess_string(guess: &str) -> Option<Self> {
+        if guess.len() != 4 {
+            None
+        } else {
+            Some(CodeMatch(
+                guess
+                    .chars()
+                    .map(MatchLevels::from_char)
+                    .map(Option::unwrap) // TODO: proper error handling here
+                    .collect::<Vec<_>>()
+                    .try_into()
+                    .unwrap(),
+            ))
+        }
     }
 }
 

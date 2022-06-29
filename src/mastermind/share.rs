@@ -46,5 +46,5 @@ pub fn prompt_for_code() -> Option<code::Code> {
     let mut input = String::new();
     stdin().read_line(&mut input).ok()?;
 
-    Some(code::Code::from_guess_string(input.trim()))
+    code::Code::from_guess_string(input.trim())
 }

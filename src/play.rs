@@ -18,7 +18,7 @@ pub fn run(matches: &ArgMatches) {
 
     let actual_code = match matches.value_of("given-code") {
         None => Code::random(),
-        Some(code) => Code::from_guess_string(code),
+        Some(code) => Code::from_guess_string(code).expect("Invalid code given!"),
     };
 
     let mut guess = None::<Code>;
@@ -32,7 +32,15 @@ pub fn run(matches: &ArgMatches) {
         print!("Enter guess #{}: ", counter);
         stdout().flush().unwrap();
 
-        let guessed_code = share::prompt_for_code().unwrap();
+        let guessed_code = match share::prompt_for_code() {
+            Some(code) => code,
+            None => {
+                eprintln!("Invalid code");
+                eprintln!("You should input a code in the following form: {}", Code::random().to_guess_string());
+                counter -= 1;
+                continue;
+            }
+        };
 
         print!("\x1b[1A\x1b[0J{}\t\t", guessed_code.prettify());
         stdout().flush().unwrap();

@@ -6,6 +6,7 @@ use colored::Colorize;
 use itertools::Itertools;
 use std::{
     error,
+    fmt,
     io::{self, Write},
 };
 
@@ -79,11 +80,28 @@ pub fn run(matches: &ArgMatches) {
     }
 }
 
+#[derive(Debug)]
+enum ParseError {
+    InvalidCode,
+    InvalidGuess,
+}
+
+impl fmt::Display for ParseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ParseError::InvalidCode => write!(f, "Invalid code"),
+            ParseError::InvalidGuess => write!(f, "Invalid guess"),
+        }
+    }
+}
+
+impl error::Error for ParseError {}
+
 fn parse_input(input: [&str; 2]) -> Result<solver::Guess, Box<dyn error::Error>> {
     let (tested_code, res_guess) = input.into_iter().next_tuple().unwrap();
 
     Ok(solver::Guess((
-        Code::from_guess_string(tested_code),
-        CodeMatch::from_guess_string(res_guess),
+        Code::from_guess_string(tested_code).ok_or(ParseError::InvalidCode)?,
+        CodeMatch::from_guess_string(res_guess).ok_or(ParseError::InvalidGuess)?,
     )))
 }

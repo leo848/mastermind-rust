@@ -17,7 +17,7 @@ pub trait Prettify {
 
 pub trait GuessString {
     fn to_guess_string(&self) -> String;
-    fn from_guess_string(string: &str) -> Self;
+    fn from_guess_string(string: &str) -> Option<Self> where Self: Sized;
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
