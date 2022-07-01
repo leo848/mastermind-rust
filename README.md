@@ -7,8 +7,8 @@ The game mastermind, build in Rust.
 ### Build from source
 
 ```sh
-git clone https://github.com/leo848/mastermind
-cd mastermind && cargo install --path .
+git clone git@github.com:leo848/mastermind-rust.git
+cd mastermind-rust && cargo install --path .
 ```
 
 ## Usage
